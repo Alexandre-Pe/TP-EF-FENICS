@@ -35,6 +35,7 @@ du/dn(x, y) = sin(5*x) for y = 0 or y = 1
 # Begin demo
 
 from dolfin import *
+import matplotlib.pyplot as plt
 
 # Create mesh and define function space
 mesh = UnitSquareMesh(32, 32)
@@ -51,8 +52,8 @@ bc = DirichletBC(V, u0, boundary)
 # Define variational problem
 u = TrialFunction(V)
 v = TestFunction(V)
-f = Expression("10*exp(-(pow(x[0] - 0.5, 2) + pow(x[1] - 0.5, 2)) / 0.02)") # f = 1.
-g = Expression("sin(5*x[0])")
+f = Expression("10*exp(-(pow(x[0] - 0.5, 2) + pow(x[1] - 0.5, 2)) / 0.02)", degree=2) # f = 1.
+g = Expression("sin(5*x[0])", degree=2)
 a = inner(grad(u), grad(v))*dx
 L = f*v*dx + g*v*ds
 
@@ -65,4 +66,5 @@ file = File("poisson.pvd")
 file << u
 
 # Plot solution
-plot(u, interactive=True)
+plot(u)#, interactive=True)
+plt.show()
