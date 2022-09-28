@@ -1,9 +1,10 @@
 '''
 NON linear BVP:
-     - div( mu(u) * grad(u) ) + w * grad(u) = f  in domain
-                                           u = g  on bdry dirichlet
-                         - mu(u) nabla(u).n = 0 on bdry Neumann
-    with w: given velocity field; mu: given diffusivity coeff. 
+
+        - div( mu(u) * grad(u) ) + w * grad(u) = f  in domain
+        u = g  on bdry dirichlet
+        - mu(u) nabla(u).n = 0 on bdry Neumann
+        with w: given velocity field; mu: given diffusivity coeff. 
     
 Example of basic exact solution in domain=(0,1)^2: 
         u = 'sin(x[0]) + sin(x[1])' corresponds to: 
@@ -11,12 +12,12 @@ Example of basic exact solution in domain=(0,1)^2:
 '''
 
 
-#from dolfin import *
+from dolfin import *
 import sys
-from fenics import *
 from sys import exit
 import numpy as np 
 import matplotlib.pyplot as plt
+import os
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -26,10 +27,10 @@ warnings.filterwarnings('ignore')
 
 # transform a npy array to a FEniCS field
 def numpy_to_fenics(array, function_space):
-	function = Function(function_space)
-	for i in range(len(function.vector()[:])):
-		function.vector()[i] = array[i]
-	return function
+        function = Function(function_space)
+        for i in range(len(function.vector()[:])):
+                function.vector()[i] = array[i]
+        return function
 
 #
 # Dirichlet boundary conditions
@@ -45,7 +46,7 @@ def u_bdry_x1(x, on_boundary): # Right bdry
 #
 # The non linear parameter m(u) and its derivative
 #
-m = 5
+m = 1
 #print('The power-law exponent of the non linearity m = ', m)
 print('The expression of mu(u) is ... see function !')
 def mu(u):
@@ -147,35 +148,35 @@ un = u0 # initialisation
 
 # Loop
 while (error>eps_du and i<i_max): 
- i+=1 # update the current iteration number
- print("Newton-Raphson iteration #",i," begins...")
- 
- # mu and dmu_du at the current iteration
- mu_n = mu(un)
- dmu_du_n = dmu_du(un)
+        i+=1 # update the current iteration number
+        print("Newton-Raphson iteration #",i," begins...")
 
- # LHS of the linearized variational formulation
- a =  # TO BE COMPLETED 
- # RHS of the linearized eqn
+        # mu and dmu_du at the current iteration
+        mu_n = mu(un)
+        dmu_du_n = dmu_du(un)
 
- L = # TO BE COMPLETED 
+        # LHS of the linearized variational formulation
+        a =  # TO BE COMPLETED 
+        # RHS of the linearized eqn
 
- 
- # Homogeneous Dirichlet b.c. 
- bc0 = DirichletBC(V, u_diri_homog, u_bdry_x0)
- 
- # Solve
- solve(a == L, dun, bc0)
- un.assign(un+dun) # update the solution
+        L = # TO BE COMPLETED 
 
- # relative diff.
 
- error = # TO BE COMPLETED
- 
- print("Newton-Raphson iteration #",i,"; error = ", error)
- # test
- if (i == i_max):
-  print("Warning: the algo exits because of the max number of ite ! error = ",error)
+        # Homogeneous Dirichlet b.c. 
+        bc0 = DirichletBC(V, u_diri_homo, u_bdry_x0)
+
+        # Solve
+        solve(a == L, dun, bc0)
+        un.assign(un+dun) # update the solution
+
+        # relative diff.
+
+        error = # TO BE COMPLETED
+
+        print("Newton-Raphson iteration #",i,"; error = ", error)
+        # test
+        if (i == i_max):
+        print("Warning: the algo exits because of the max number of ite ! error = ",error)
 
 if (i < i_max):
   print("* Newton-Raphson algorithm has converged: the expected stationarity has been reached. eps_du = ",eps_du)

@@ -172,6 +172,7 @@ eps_du = 1e-9 # tolerance on the relative norm
 du = TrialFunction(V)
 un, dun = Function(V), Function(V)
 un = u0 # initialisation
+bc0 = DirichletBC(V, u_diri_homog, u_bdry_x0)
 
 # Loop
 while (error>eps_du and i<i_max): 

@@ -18,7 +18,6 @@ Goal: Solve this BVP by an offline-online strategy based on a POD.
 '''
 
 from dolfin import *
-from fenics import *
 import matplotlib.pyplot as plt
 import numpy as np
 from numpy.linalg import eigh
