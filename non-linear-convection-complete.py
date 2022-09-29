@@ -11,9 +11,9 @@ Example of basic exact solution in domain=(0,1)^2:
 '''
 
 
-#from dolfin import *
+from dolfin import *
 import sys
-from fenics import *
+# from fenics import *
 from sys import exit
 import numpy as np 
 import matplotlib.pyplot as plt
@@ -95,7 +95,7 @@ fp = interpolate(fp_exp,V)
 #fp = Expression('0.', degree=u.ufl_element().degree())
 plt.figure()
 p2=plot(fp,title='The source term')
-p2.set_cmap("rainbow"); plt.colorbar(p2);
+p2.set_cmap("rainbow"); plt.colorbar(p2)
 plt.show() #(block=True)
 
 
