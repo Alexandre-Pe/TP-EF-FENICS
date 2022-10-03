@@ -17,8 +17,8 @@ import sys
 from sys import exit
 import numpy as np 
 import matplotlib.pyplot as plt
-import warnings
-warnings.filterwarnings('ignore')
+# import warnings
+# warnings.filterwarnings('ignore')
 
 #
 # FUNCTIONS
